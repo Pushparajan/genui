@@ -4,6 +4,8 @@
 
 GenUI is an experimental TypeScript framework for AI-driven interfaces. Register business capabilities once; generate schema-based views and execute actions through a server-side permission and validation boundary. Apache-2.0 licensed. Node.js 22+.
 
+New to GenUI? Follow the [user guide](docs/USER_GUIDE.md) for Studio walkthroughs, RAG forms, campaign approvals, storage modes, and troubleshooting.
+
 ## Run the framework
 
 ```sh

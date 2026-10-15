@@ -2,6 +2,8 @@
 
 The supplied architecture is preserved in [architecture-v1.md](architecture-v1.md). It is a product direction with proposed release stages, not a production-readiness claim. The executable reference now spans capability discovery, a deterministic graph planner, tenant policies, MCP v2 transport, durable PostgreSQL workflows, independent approvals, identity verification, audit events, and Studio.
 
+For a step-by-step walkthrough, see the [user guide](../USER_GUIDE.md).
+
 ## Start Studio
 
 ```sh
