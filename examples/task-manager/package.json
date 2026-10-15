@@ -1,0 +1,25 @@
+{
+  "name": "@genui/example-task-manager",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"tsx server.ts\" \"vite --host 0.0.0.0\"",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@genui/core": "0.1.0",
+    "@genui/runtime": "0.1.0",
+    "@genui/registry": "0.1.0",
+    "@genui/ai": "0.1.0",
+    "@genui/renderer-react": "0.1.0",
+    "@genui/renderer-spectrum": "0.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1",
+    "tsx": "^4.20.0",
+    "concurrently": "^9.2.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@genui/studio",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"tsx server.ts\" \"vite --host 0.0.0.0\"",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "worker": "tsx worker.ts"
+  },
+  "dependencies": {
+    "@genui/core": "0.1.0",
+    "@genui/schema": "0.1.0",
+    "@genui/marketing-core": "0.1.0",
+    "@genui/connector-sdk": "0.1.0",
+    "@genui/mcp-gateway": "0.1.0",
+    "@genui/marketing-connectors": "0.1.0",
+    "@genui/workflow-engine": "0.1.0",
+    "@genui/registry-postgres": "0.1.0",
+    "@genui/renderer-react": "0.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@genui/retrieval-core": "0.1.0",
+    "@genui/retrieval-postgres": "0.1.0",
+    "@genui/ui-compiler": "0.1.0"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1",
+    "tsx": "^4.20.0",
+    "concurrently": "^9.2.0"
+  }
+}

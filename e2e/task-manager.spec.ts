@@ -1,0 +1,31 @@
+import { test, expect } from '@playwright/test';
+test('all four commands use generated views and explicit confirmation', async ({ page }) => {
+  await page.goto('/');
+  const generate = page.getByRole('button', { name: 'Generate interface' });
+  await generate.click();
+  await page.getByLabel('Title', { exact: true }).fill('Browser task');
+  await page.getByLabel('Due date', { exact: true }).fill('2026-10-20');
+  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await expect(page.getByLabel('Action result')).toContainText('Browser task');
+  await page.getByRole('button', { name: 'Show my tasks', exact: true }).click(); await generate.click();
+  await expect(page.getByRole('table')).toContainText('Browser task');
+  await page.getByRole('button', { name: 'Change the due date', exact: true }).click(); await generate.click();
+  await expect(page.getByLabel('Due date', { exact: true })).toHaveValue('2026-10-20');
+  await page.getByLabel('Due date', { exact: true }).fill('2026-10-21');
+  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await expect(page.getByLabel('Action result')).toContainText('2026-10-21');
+  await page.getByRole('button', { name: 'Delete this task', exact: true }).click(); await generate.click();
+  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await expect(page.getByRole('alertdialog')).toBeVisible();
+  await page.getByRole('button', { name: 'Confirm action', exact: true }).click();
+  await expect(page.getByLabel('Action result')).toContainText('deleted');
+  await page.getByRole('button', { name: 'Show my tasks', exact: true }).click(); await generate.click();
+  await expect(page.getByText('No records.')).toBeVisible();
+});
+test('Spectrum adapter renders and submits a generated form', async ({ page }) => {
+  await page.goto('/'); await page.getByLabel('Adobe Spectrum').check();
+  await page.getByRole('button', { name: 'Generate interface' }).click();
+  await page.getByRole('textbox', { name: 'Title' }).fill('Spectrum task');
+  await page.getByRole('button', { name: 'Submit', exact: true }).click();
+  await expect(page.getByLabel('Action result')).toContainText('Spectrum task');
+});

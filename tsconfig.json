@@ -1,0 +1,59 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/core"
+    },
+    {
+      "path": "packages/registry"
+    },
+    {
+      "path": "packages/schema"
+    },
+    {
+      "path": "packages/runtime"
+    },
+    {
+      "path": "packages/ai"
+    },
+    {
+      "path": "packages/renderer-react"
+    },
+    {
+      "path": "packages/renderer-spectrum"
+    },
+    {
+      "path": "packages/marketing-core"
+    },
+    {
+      "path": "packages/connector-sdk"
+    },
+    {
+      "path": "packages/adapter-mcp"
+    },
+    {
+      "path": "packages/mcp-gateway"
+    },
+    {
+      "path": "packages/workflow-engine"
+    },
+    {
+      "path": "packages/registry-postgres"
+    },
+    {
+      "path": "packages/marketing-connectors"
+    },
+    {
+      "path": "packages/policy-engine"
+    },
+    {
+      "path": "packages/retrieval-core"
+    },
+    {
+      "path": "packages/retrieval-postgres"
+    },
+    {
+      "path": "packages/ui-compiler"
+    }
+  ]
+}

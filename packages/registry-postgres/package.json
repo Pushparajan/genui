@@ -1,0 +1,32 @@
+{
+  "name": "@genui/registry-postgres",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@genui/core": "0.1.0",
+    "@genui/registry": "0.1.0",
+    "@genui/marketing-core": "0.1.0",
+    "@genui/workflow-engine": "0.1.0",
+    "pg": "^8.16.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pushparajan/genui.git",
+    "directory": "packages/registry-postgres"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

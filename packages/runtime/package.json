@@ -1,0 +1,28 @@
+{
+  "name": "@genui/runtime",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@genui/core": "0.1.0",
+    "@genui/registry": "0.1.0",
+    "@genui/schema": "0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pushparajan/genui.git",
+    "directory": "packages/runtime"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

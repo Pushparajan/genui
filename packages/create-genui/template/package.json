@@ -1,0 +1,16 @@
+{
+  "name": "my-genui-app",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node app.mjs"
+  },
+  "dependencies": {
+    "@genui/core": "0.1.0",
+    "@genui/registry": "0.1.0",
+    "@genui/runtime": "0.1.0"
+  }
+}

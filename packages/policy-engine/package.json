@@ -1,0 +1,29 @@
+{
+  "name": "@genui/policy-engine",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@genui/marketing-core": "0.1.0",
+    "jose": "^6.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pushparajan/genui.git",
+    "directory": "packages/policy-engine"
+  }
+}

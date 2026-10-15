@@ -1,0 +1,13 @@
+# 06 · Durable workflow execution
+
+The PostgreSQL checkpoint engine stores an immutable plan, mutable step states, run status, optimistic revision and append-only-by-API audit events. Each write uses tenant/run/revision compare-and-swap. Events and canonical-to-provider identity mappings commit in the same database transaction as workflow state. No transaction spans a vendor API. Services should call the engine through trusted application code rather than writing tables directly.
+
+`create` persists a plan. `resume` checks current policy and pinned contracts, resolves dependency inputs, validates them, checkpoints `executing`, invokes the provider, validates normalized output, and commits the result. Completed stages are never rerun. The optional worker ticks pending/retryable runs; approvals and uncertain in-flight steps are never resumed automatically. CAS prevents competing workers from both entering the same pending stage.
+
+Read operations and explicitly declared provider-idempotent operations may retry retryable failures with persisted exponential retry times and at most five attempts. Every attempt reuses a stable per-run/stage idempotency key. Merely sending an idempotency header does not justify declaring a provider idempotent. The reference write capabilities use one attempt. There is no exactly-once guarantee for remote side effects.
+
+A crash after a side effect but before its result commits leaves `executing`. A write error with an unknown outcome requires reconciliation. An operator must inspect the provider using the correlation ID and record a verified normalized output, certify that the operation was not applied, or explicitly permit a retry. Do not permit retries without checking external state. A verified not-applied failure can enter saga compensation. Compensation runs supported operations in reverse dependency order, checkpoints before each operation, and records unsupported/failed compensation for manual reconciliation. Compensation is not automatic rollback.
+
+Approvals pause a run before the external stage. A separate tenant approver can approve or reject it; the demo UI simulates this distinct identity explicitly. Live systems must authenticate the reviewer. The engine rechecks policy at actual activation. `approve` alone performs no vendor operation.
+
+Storage interfaces support memory for tests or PostgreSQL for durable processes. Docker development volumes are not guaranteed cloud snapshot persistence. Production deployments need a managed database, backups, migration/recovery procedures, a tenant scheduler and incident operations. Temporal remains an optional future integration; this implementation provides its own checkpoint/CAS execution contract.

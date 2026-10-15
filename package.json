@@ -1,0 +1,38 @@
+{
+  "name": "genui-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "examples/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm run typecheck && npm run build -w @genui/example-task-manager && npm run build -w @genui/studio",
+    "typecheck": "tsc -b && npm run typecheck -w @genui/example-task-manager && npm run typecheck -w @genui/studio",
+    "test": "vitest run",
+    "dev": "npm run dev -w @genui/example-task-manager",
+    "test:e2e": "playwright test",
+    "dev:studio": "npm run dev -w @genui/studio",
+    "postgres:dev": "bash scripts/postgres-dev.sh",
+    "test:postgres": "node scripts/require-postgres.mjs && vitest run tests/postgres.test.ts",
+    "worker:studio": "npm run worker -w @genui/studio",
+    "postgres:rag": "bash scripts/postgres-rag-dev.sh",
+    "test:rag": "vitest run tests/rag.test.ts tests/rag-evaluation.test.ts",
+    "test:rag:postgres": "node scripts/require-rag-postgres.mjs && vitest run tests/rag-postgres.test.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "~5.9.3",
+    "vitest": "^5.0.4",
+    "@types/pg": "^8.15.0",
+    "@modelcontextprotocol/server": "^2.3.1"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@genui/renderer-spectrum",
+  "version": "0.1.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@genui/core": "0.1.0",
+    "@genui/renderer-react": "0.1.0",
+    "@adobe/react-spectrum": "^3.45.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pushparajan/genui.git",
+    "directory": "packages/renderer-spectrum"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

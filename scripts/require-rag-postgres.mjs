@@ -1,0 +1,1 @@
+if (!process.env.TEST_RAG_DATABASE_URL) throw new Error('Set TEST_RAG_DATABASE_URL to an isolated pgvector-enabled PostgreSQL database. Integration tests require an admin test role to create a temporary restricted RLS test role.');
