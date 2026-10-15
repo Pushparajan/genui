@@ -56,3 +56,19 @@ test('RAG UI retrieves a cited view, changes with intent, and validates without 
   const tampered=await request.post('http://127.0.0.1:5174/v1/ui/validate',{data:{capabilityId:'marketing.journey.activate',capabilityVersion:'invented',input:{journeyId:'x'}}});expect(tampered.status()).toBe(403);
   const crossTenant=await request.post('http://127.0.0.1:5174/v1/retrieval/search',{data:{query:'accounts',tenantId:'other'}});expect(crossTenant.status()).toBe(400);
 });
+
+test('conversation seeds preview all scenarios without creating workflows or granting approvals',async({page,request})=>{
+  const before=await (await request.get('http://127.0.0.1:5174/api/runs')).json();
+  const catalog=await (await request.get('http://127.0.0.1:5174/api/conversation-seeds')).json();
+  expect(catalog.fixtureOnly).toBe(true);expect(catalog.scenarios).toHaveLength(31);expect(catalog.walkthroughs[0].messageCount).toBe(40);
+  await page.goto('http://127.0.0.1:5174');await page.getByRole('button',{name:'Chat',exact:true}).click();
+  await page.getByRole('button',{name:'Preview seed conversation',exact:true}).click();
+  const preview=page.getByTestId('seed-preview');await expect(preview.getByRole('heading',{name:'Finance activation walkthrough'})).toBeVisible();
+  await expect(preview.getByText('Audience plan prepared:',{exact:false})).toContainText('412 unique contacts');
+  await page.getByRole('combobox',{name:'Conversation example',exact:true}).selectOption('scenario-INT-17');await page.getByRole('button',{name:'Preview seed conversation',exact:true}).click();
+  await expect(preview.getByText('Send it.',{exact:true})).toBeVisible();await expect(preview.getByText('Simulated activation accepted',{exact:false})).toContainText('Nothing was actually sent');
+  const after=await (await request.get('http://127.0.0.1:5174/api/runs')).json();expect(after).toEqual(before);
+  const unknown=await request.get('http://127.0.0.1:5174/api/conversation-seeds/unknown');expect(unknown.status()).toBe(404);
+  const fakeApproval=await request.post('http://127.0.0.1:5174/api/approve',{data:{id:'seed-finance-plan'}});expect(fakeApproval.status()).toBe(403);
+  await page.getByRole('button',{name:'Clear seed preview',exact:true}).click();await expect(preview).toHaveCount(0);
+});

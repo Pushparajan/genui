@@ -30,6 +30,10 @@ STUDIO_DATABASE_URL=postgresql://postgres@127.0.0.1:5432/genui npm run dev:studi
 
 Studio runs on port 5174 and explicitly uses fixture providers and demo identities. It covers a seven-stage Salesforce → Workfront → AEM/AEP → AJO → CJA lifecycle, with independent approval before activation. Its nine connector manifests also include GenStudio, Marketing Cloud, and custom MCP extension contracts. Live vendor access requires licensed endpoints, OAuth credentials and verified mappings; no live connection is implied. See the [implementation/status table](docs/marketing/README.md#what-is-implemented) and [six specifications](docs/marketing/README.md#six-specifications).
 
+## Conversation seed examples
+
+Studio **Chat → Example conversations** includes all 31 scenarios from the supplied interaction CSV, a 40-message walkthrough, and synthetic campaign/audience records. These are read-only previews; seeded approvals or send messages never execute actions. Regenerate them with `npm run seed:conversations`. See the [seed-data guide](data/conversations/README.md).
+
 ## RAG for dynamic UI generation
 
 The [retrieval-grounded UI architecture](docs/rag/architecture.md) now retrieves authorized capability documents, published view templates and approved marketing context before compiling a UI. Studio's **RAG UI** tab shows the generated form, exact capability/template versions, citations, source freshness and retrieval mode. Campaign chat also returns a cited UI preview scoped to its validated graph.

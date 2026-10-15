@@ -102,6 +102,14 @@ Use the campaign selector when you have multiple plans. Record the canonical cam
 
 Chat supports the reference finance campaign/journey recipe and between **1 and 20** accounts. It is not a general-purpose assistant. The offline handler is deterministic, and it does not execute the campaign when it proposes a plan. Continue from Workspace using **Run next stages**.
 
+### Explore seeded conversation examples
+
+In **Chat**, the **Example conversations** panel lets you choose a finance walkthrough or any of the 31 interaction scenarios imported from the supplied CSV. Click **Preview seed conversation**, then expand **Fixture response data** to inspect the supporting records. **Clear seed preview** closes the example.
+
+The walkthrough has 40 messages and synthetic audience/delivery data. Previews are separate from the campaign assistant: messages such as “Send it.” and “Approve.” are displayed without being submitted or executed. They do not create plans or grant approvals. Some scenarios describe proposed features that are not implemented as live actions.
+
+The examples are bundled fixture data, not restored user conversations. Developers can regenerate them with `npm run seed:conversations`, then restart Studio. See the [conversation seed guide](../data/conversations/README.md) for provenance, numerical assumptions and coverage.
+
 ## 5. Generate an interface with RAG UI
 
 RAG means retrieval-augmented generation: GenUI retrieves relevant approved knowledge before composing the interface. It uses published views bound to registered capability versions.

@@ -8,11 +8,13 @@ import { lifecycleInputs } from '@genui/marketing-connectors';
 import { Pool, migrate, PostgresWorkflowStore } from '@genui/registry-postgres';
 import {RetrievalError} from '@genui/retrieval-core';
 import {createStudioRAG} from './rag.js';
+import {loadConversationSeeds} from './conversation-seeds.js';
 import { createReferenceSystem } from './reference.js';
 const pool = process.env.STUDIO_DATABASE_URL ? new Pool({ connectionString: process.env.STUDIO_DATABASE_URL }) : undefined;
 if (pool) await migrate(pool);
 const system = await createReferenceSystem(pool ? new PostgresWorkflowStore(pool) : undefined);
 const rag=await createStudioRAG(system.registry,system.context,pool,process.env.STUDIO_RAG_HYBRID_FIXTURE==='1');
+const conversationSeeds=loadConversationSeeds();
 const storage = pool ? 'postgresql' : 'memory';
 const server = createServer(async (req, res) => {
   res.setHeader('Content-Type', 'application/json'); res.setHeader('Cache-Control', 'no-store');
@@ -21,6 +23,12 @@ const server = createServer(async (req, res) => {
     if (req.method === 'GET' && path === '/api/health') { res.end(JSON.stringify({ status: 'ok', storage, mode: 'fixture', retrieval:rag.mode })); return; }
     if (req.method === 'GET' && path === '/api/catalog') {
       res.end(JSON.stringify({ mode: 'fixture', storage, connectors: system.manifests, capabilities: system.registry.list().map(c => ({ ...c, providers: c.providers.map(p => ({ id: p.id, platform: p.platform, tool: p.tool, version: p.version })) })), retrieval:{mode:rag.mode,embeddingModel:rag.embeddingModel}, identity: { principal: system.context.principal, mappings: system.context.identities } })); return;
+    }
+    if(req.method==='GET' && path==='/api/conversation-seeds'){res.end(JSON.stringify(conversationSeeds.catalog()));return;}
+    if(req.method==='GET' && path.startsWith('/api/conversation-seeds/')){
+      const preview=conversationSeeds.preview(decodeURIComponent(path.slice('/api/conversation-seeds/'.length)));
+      if(!preview){res.statusCode=404;res.end(JSON.stringify({error:'Unknown conversation seed'}));return;}
+      res.end(JSON.stringify(preview));return;
     }
     if (req.method === 'GET' && path === '/api/runs') { res.end(JSON.stringify(await system.engine.store.list(system.context.principal.tenantId))); return; }
     if (req.method !== 'POST' || !['/api/plan', '/api/chat', '/api/resume', '/api/approve', '/api/reject', '/api/validate-connector','/v1/retrieval/search','/v1/ui/compose','/v1/ui/validate'].includes(path)) { res.statusCode = 404; res.end('{}'); return; }

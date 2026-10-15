@@ -17,6 +17,7 @@
     "reference.ts",
     "vite.config.ts",
     "worker.ts",
-    "rag.ts"
+    "rag.ts",
+    "conversation-seeds.ts"
   ]
 }
